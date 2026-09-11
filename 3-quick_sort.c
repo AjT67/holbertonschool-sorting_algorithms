@@ -1,17 +1,24 @@
 #include "sort.h"
 
 /**
- * swap_ints - swaps two integers in an array
+ * swap_ints - swaps two integers in an array, if they differ
  * @a: pointer to the first integer
  * @b: pointer to the second integer
+ *
+ * Return: 1 if a swap was performed, 0 otherwise
  */
-void swap_ints(int *a, int *b)
+int swap_ints(int *a, int *b)
 {
 	int tmp;
+
+	if (*a == *b)
+		return (0);
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
+
+	return (1);
 }
 
 /**
@@ -36,19 +43,13 @@ int lomuto_partition(int *array, int lo, int hi, size_t size)
 		if (array[j] < pivot)
 		{
 			i++;
-			if (i != j)
-			{
-				swap_ints(&array[i], &array[j]);
+			if (i != j && swap_ints(&array[i], &array[j]))
 				print_array(array, size);
-			}
 		}
 	}
 
-	if (i + 1 != hi)
-	{
-		swap_ints(&array[i + 1], &array[hi]);
+	if (i + 1 != hi && swap_ints(&array[i + 1], &array[hi]))
 		print_array(array, size);
-	}
 
 	return (i + 1);
 }
